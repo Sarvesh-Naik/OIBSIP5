@@ -1,0 +1,102 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Library {
+  
+  private ArrayList<Book> books;
+
+  public Library() {
+    books = new ArrayList<Book>();
+  }
+
+  public void addBook(Book book) {
+    books.add(book);
+  }
+
+  public Book searchBook(String title) {
+    for (Book book : books) {
+      if (book.getTitle().equalsIgnoreCase(title)) {
+        return book;
+      }
+    }
+    return null;
+  }
+
+  public void displayBooks() {
+    System.out.println("Books in the Library: ");
+    for (Book book : books) {
+      System.out.println(book);
+    }
+  }
+
+  public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    Library library = new Library();
+
+    while (true) {
+      System.out.println("1. Add Book");
+      System.out.println("2. Search Book");
+      System.out.println("3. Display Books");
+      System.out.println("4. Exit");
+      System.out.print("Enter your choice: ");
+      int choice = input.nextInt();
+
+      if (choice == 1) {
+        input.nextLine();
+        System.out.print("Enter book title: ");
+        String title = input.nextLine();
+        System.out.print("Enter book author: ");
+        String author = input.nextLine();
+        System.out.print("Enter book ISBN: ");
+        String ISBN = input.nextLine();
+        Book book = new Book(title, author, ISBN);
+        library.addBook(book);
+      } else if (choice == 2) {
+        input.nextLine();
+        System.out.print("Enter book title to search: ");
+        String title = input.nextLine();
+        Book book = library.searchBook(title);
+        if (book == null) {
+          System.out.println("Book not found.");
+        } else {
+          System.out.println("Book found: " + book);
+        }
+      } else if (choice == 3) {
+        library.displayBooks();
+      } else if (choice == 4) {
+        break;
+      } else {
+        System.out.println("Invalid choice. Try again.");
+      }
+    }
+    input.close();
+  }
+}
+
+class Book {
+  private String title;
+  private String author;
+  private String ISBN;
+
+  public Book(String title, String author, String ISBN) {
+    this.title = title;
+    this.author = author;
+    this.ISBN = ISBN;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public String getISBN() {
+    return ISBN;
+  }
+
+  public String toString() {
+    return "Title: " + title + ", Author: " + author + ", ISBN: " + ISBN;
+  }
+}
